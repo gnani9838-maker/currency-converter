@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<title>Currency Converter</title>
+<style>
+body{font-family:sans-serif;text-align:center;padding:30px;background:#111;color:#fff}
+.card{background:#222;padding:20px;border-radius:15px;max-width:350px;margin:auto}
+input,select{padding:10px;margin:5px;border-radius:8px;border:none}
+h1{color:#0f0}
+button{padding:10px 20px;background:#0f0;border:none;border-radius:10px;font-weight:bold}
+</style>
+</head>
+<body>
+<div class="card">
+<h2>💱 Currency Converter</h2>
+<input type="number" id="amt" value="1"><br>
+<select id="from"><option>USD</option><option>INR</option><option>EUR</option></select>
+<select id="to"><option>INR</option><option>USD</option><option>EUR</option></select>
+<h1 id="result">...</h1>
+<button onclick="convert()">Convert</button>
+</div>
+<script>
+async function convert(){
+let a=document.getElementById('amt').value;
+let f=document.getElementById('from').value;
+let t=document.getElementById('to').value;
+let res=await fetch(`https://api.exchangerate-api.com/v4/latest/${f}`);
+let data=await res.json();
+document.getElementById('result').innerText=(a*data.rates[t]).toFixed(2)+' '+t;
+}
+convert();
+</script>
+</body>
+</html>
